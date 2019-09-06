@@ -7,3 +7,5 @@ param4 = destiny_address endereco do meu parceiro
 
 
 apos isso, so escrever a mensagem e dar o ok
+
+para sair so digitar exit

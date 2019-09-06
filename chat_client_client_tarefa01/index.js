@@ -39,7 +39,7 @@ const sendMensage = (msgn) => {
 
 process.openStdin().addListener("data", function (d) {
     if(d.toString().trim() == 'exit'){
-        return server.close()
+        return process.exit()
     }
     // note:  d is an object, and when converted to a string it will
     // end with a linefeed.  so we (rather crudely) account for that  
