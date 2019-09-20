@@ -16,6 +16,7 @@ public class Mensagem implements Serializable {
     private EnumTipoMensagem type;
     private Object body;
     private String mensagem;
+    private Boolean isMultiPart;
 
     /**
      * @return the body
@@ -57,5 +58,19 @@ public class Mensagem implements Serializable {
      */
     public void setType(EnumTipoMensagem type) {
         this.type = type;
+    }
+
+    /**
+     * @return the isMultiPart
+     */
+    public Boolean getIsMultiPart() {
+        return isMultiPart;
+    }
+
+    /**
+     * @param isMultiPart the isMultiPart to set
+     */
+    public void setIsMultiPart(Boolean isMultiPart) {
+        this.isMultiPart = isMultiPart;
     }
 }

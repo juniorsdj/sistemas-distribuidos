@@ -10,15 +10,22 @@ import java.util.logging.Logger;
 public class UDPServer implements UDPServerInterface {
 
     private int port;
-    private DatagramSocket serverSocket;
+    private MySocket serverSocket;
+    private ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    private ObjectOutputStream oos = new ObjectOutputStream(baos);
+
     private List<RegistroClient> listaRegistros = new ArrayList();
     private Boolean isListening;
 
     byte[] receiveData = new byte[2048];
     byte[] sendData = new byte[2048];
 
+    public UDPServer() throws IOException {
+
+    }
+
     public void start(int port) throws SocketException, IOException {
-        this.serverSocket = new DatagramSocket(port);
+        this.serverSocket = new MySocket(port);
         this.port = port;
         this.listen();
     }
@@ -28,57 +35,77 @@ public class UDPServer implements UDPServerInterface {
         this.isListening = true;
         while (this.isListening) {
             try {
-                DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-                System.out.println("Esperando por datagrama UDP na porta " + this.port);
-                serverSocket.receive(receivePacket);
 
-                ByteArrayInputStream baos = new ByteArrayInputStream(receiveData);
-                ObjectInputStream oos = new ObjectInputStream(baos);
+                Protocol recebido = serverSocket.receive();
 
-                Mensagem msg = (Mensagem) oos.readObject();
+                Mensagem msg = (Mensagem) recebido.getMsg();
+                InetAddress IPAddressRecebido = recebido.getIp();
+                int portClient = recebido.getPort();
 
                 switch (msg.getType()) {
                     case ADICIONAR:
-                        this.adicionarClient((RegistroClient) msg.getBody());
+                        RegistroClient registro;
+                        registro = (RegistroClient) msg.getBody();
+
+                        registro.setIpClient(IPAddressRecebido);
+                        registro.setPortClient(portClient);
+
+                        this.adicionarClient(registro);
+
+                        this.listarDisponiveis(IPAddressRecebido, portClient);
                         break;
                     case REMOVER:
                         this.removerClient((RegistroClient) msg.getBody());
                         break;
                     case LISTAR_DISPONIVEIS:
-                        System.out.println("Listar disponiveis");
+                        this.listarDisponiveis(IPAddressRecebido, portClient);
                         break;
+
                     case MENSAGEM:
                         System.out.println("Mensagem");
                         break;
                     default:
                         System.out.println("Não está obedecendo os tipos do protocolo!");
-
                 }
-
-                //InetAddress IPAddress = receivePacket.getAddress();
-                //int port = receivePacket.getPort();
-                //String capitalizedSentence = sentence.toUpperCase();
-                //sendData = capitalizedSentence.getBytes();
-                //DatagramPacket sendPacket = new DatagramPacket(sendData,
-                //       sendData.length, IPAddress, port);
-                //System.out.print("Enviando " + capitalizedSentence + "...");
-                //serverSocket.send(sendPacket);
-                //System.out.println("OK\n");
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(UDPServer.class.getName()).log(Level.SEVERE, null, ex);
+
             }
         }
     }
 
     @Override
-    public boolean removerClient(RegistroClient registro) {
-        
+    public boolean removerClient(RegistroClient registro
+    ) {
+
         return true;
+    }
+
+    private void listarDisponiveis(InetAddress IPAddressRecebido, int portClient) throws IOException {
+        Mensagem novaMensagem = new Mensagem();
+        novaMensagem.setType(EnumTipoMensagem.REGISTRO);
+        novaMensagem.setIsMultiPart(true);
+        for (int i = 0; i < this.listaRegistros.size(); i++) {
+            RegistroClient novoRegistro = (RegistroClient) this.listaRegistros.get(i);
+            novaMensagem.setBody(novoRegistro);
+            if (i == this.listaRegistros.size() - 1) {
+                novaMensagem.setIsMultiPart(false);
+            }
+
+            Protocol protocolSend = new Protocol();
+            protocolSend.setIp(IPAddressRecebido);
+            protocolSend.setMsg(novaMensagem);
+            protocolSend.setPort(portClient);
+
+            serverSocket.send(protocolSend);
+
+        }
     }
 
     @Override
     public boolean adicionarClient(RegistroClient registro) {
         this.listaRegistros.add(registro);
+        System.out.println(registro.getNomeClient());
         return true;
     }
 

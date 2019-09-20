@@ -11,9 +11,11 @@ import java.io.IOException;
  *
  * @author QueroDelivery
  */
-public interface UDPServerInterface {
-    public void listen() throws IOException;
-    public boolean removerClient(RegistroClient registro);
-    public boolean adicionarClient(RegistroClient registro);
+public interface MySocketInterface {
+
+    public void send(Protocol protocol) throws IOException;
+    
+    public Protocol receive() throws IOException, ClassNotFoundException;
+
     
 }

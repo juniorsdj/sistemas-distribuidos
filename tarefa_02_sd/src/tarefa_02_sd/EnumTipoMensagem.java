@@ -10,7 +10,7 @@ package tarefa_02_sd;
  * @author QueroDelivery
  */
 public enum EnumTipoMensagem {
-    ADICIONAR(1), MENSAGEM(2), REMOVER(3), LISTAR_DISPONIVEIS(4);
+    ADICIONAR(1), MENSAGEM(2), REMOVER(3), LISTAR_DISPONIVEIS(4), REGISTRO(5);
      
     private final int valor;
     EnumTipoMensagem(int valorOpcao){
