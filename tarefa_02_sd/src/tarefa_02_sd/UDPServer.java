@@ -35,15 +35,14 @@ public class UDPServer implements UDPServerInterface {
                 ByteArrayInputStream baos = new ByteArrayInputStream(receiveData);
                 ObjectInputStream oos = new ObjectInputStream(baos);
 
-                Mensagem mensagemRecebida = (Mensagem) oos.readObject();
+                Mensagem msg = (Mensagem) oos.readObject();
 
-                
-                switch (mensagemRecebida.getType()) {
+                switch (msg.getType()) {
                     case ADICIONAR:
-                        System.out.println("Adicionar");
+                        this.adicionarClient((RegistroClient) msg.getBody());
                         break;
                     case REMOVER:
-                        System.out.println("Remover");
+                        this.removerClient((RegistroClient) msg.getBody());
                         break;
                     case LISTAR_DISPONIVEIS:
                         System.out.println("Listar disponiveis");
@@ -72,12 +71,13 @@ public class UDPServer implements UDPServerInterface {
     }
 
     @Override
-    public boolean removerCliente(RegistroClient registro) {
+    public boolean removerClient(RegistroClient registro) {
+        
         return true;
     }
 
     @Override
-    public boolean adicionarCliente(RegistroClient registro) {
+    public boolean adicionarClient(RegistroClient registro) {
         this.listaRegistros.add(registro);
         return true;
     }

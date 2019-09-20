@@ -37,6 +37,14 @@ public class Main {
             }
             if (option == 2) {
                 client = new UDPClient();
+                client.registrarServidor();
+                int newOption = 0;
+                do {
+                    System.out.println("Informe 1 para receber a lista de usuarios");
+                    System.out.println("Informe 2 para desconectar");
+                    System.out.println("Informe 3 para falar com alguem");
+                    int portaServidor = input.nextInt();
+                } while (newOption > 0);
             }
         } while (option > 0);
 

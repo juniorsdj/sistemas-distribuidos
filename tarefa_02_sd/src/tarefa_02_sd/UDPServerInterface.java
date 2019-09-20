@@ -13,6 +13,6 @@ import java.io.IOException;
  */
 public interface UDPServerInterface {
     public void listen() throws IOException;
-    public boolean removerCliente(RegistroClient registro);
-    public boolean adicionarCliente(RegistroClient registro);
+    public boolean removerClient(RegistroClient registro);
+    public boolean adicionarClient(RegistroClient registro);
 }

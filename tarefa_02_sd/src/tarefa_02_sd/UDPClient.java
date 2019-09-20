@@ -4,52 +4,69 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
-class UDPClient {
+public class UDPClient {
 
-    public static void main(String args[]) throws Exception {
+    private ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    private ObjectOutputStream oos = new ObjectOutputStream(baos);
+    private DatagramSocket clientSocket = new DatagramSocket();
 
-        Scanner input = new Scanner(System.in);
+    private RegistroClient registro = new RegistroClient();
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
+    private String servidor;
+    private int portaServidor;
+    private int portaClientDefault = 4000;
 
-        DatagramSocket clientSocket = new DatagramSocket();
+    private String name;
 
-        String servidor = "localhost";
-        int porta = 4000;
+    private Scanner input = new Scanner(System.in);
 
-        InetAddress IPAddress = InetAddress.getByName(servidor);
+    private InetAddress IPAddressServer;
 
-        byte[] sendData = new byte[1024];
-        byte[] receiveData = new byte[1024];
+    private byte[] sendData = new byte[1024];
+    private byte[] receiveData = new byte[1024];
+    
 
-        System.out.println("Digite o texto a ser enviado ao servidor: ");
-        String sentence = input.nextLine();
-        Mensagem mensagemEnviada = new Mensagem();
-        mensagemEnviada.setMensagem(sentence);
-        mensagemEnviada.setType(EnumTipoMensagem.MENSAGEM);
+    public UDPClient() throws IOException {
 
-        oos.writeObject(mensagemEnviada);
+    }
+
+    public void registrarServidor() throws UnknownHostException, IOException {
+        System.out.println("Informe qual é o servidor");
+        this.servidor = input.nextLine();
+        this.IPAddressServer = InetAddress.getByName(this.servidor);
+        System.out.println("Informe qual é a porta servidor");
+        this.portaServidor = input.nextInt();
+        System.out.println("Informe o seu nome:");
+        this.name = input.nextLine();
+
+        registro.setNomeClient(this.name);
+        registro.setPortClient(this.portaClientDefault);
+
+        Mensagem msg = new Mensagem();
+        msg.setBody(registro);
+        msg.setType(EnumTipoMensagem.ADICIONAR);
+
+        this.sendMensage(msg);
+
+    }
+
+    private void sendMensage(Mensagem msg) throws IOException {
+        oos.writeObject(msg);
         oos.flush();
         byte[] Buf = baos.toByteArray();
-
-        DatagramPacket sendPacket = new DatagramPacket(Buf,
-                Buf.length, IPAddress, porta);
-
+        DatagramPacket sendPacket = new DatagramPacket(Buf, Buf.length, this.IPAddressServer, portaServidor);
         System.out
-                .println("Enviando pacote UDP para " + servidor + ":" + porta);
+                .println("Enviando pacote UDP para " + servidor + ":" + portaServidor);
         clientSocket.send(sendPacket);
-
-        DatagramPacket receivePacket = new DatagramPacket(receiveData,
-                receiveData.length);
-
-        clientSocket.receive(receivePacket);
-        System.out.println("Pacote UDP recebido...");
-
-        String modifiedSentence = new String(receivePacket.getData());
-
-        System.out.println("Texto recebido do servidor:" + modifiedSentence);
-        clientSocket.close();
-        System.out.println("Socket cliente fechado!");
     }
+   
+    //
+    //DatagramPacket receivePacket = new DatagramPacket(receiveData,
+    //      receiveData.length);
+    //clientSocket.receive(receivePacket);
+    //System.out.println("Pacote UDP recebido...");
+    //String modifiedSentence = new String(receivePacket.getData());
+    //System.out.println("Texto recebido do servidor:" + modifiedSentence);
+    //clientSocket.close();
+    //System.out.println("Socket cliente fechado!");
 }
