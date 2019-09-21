@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tarefa_02_sd;
+package protocolLayer;
 
 /**
  *
  * @author QueroDelivery
  */
-public enum EnumTipoMensagem {
-    ADICIONAR(1), MENSAGEM(2), REMOVER(3), LISTAR_DISPONIVEIS(4), REGISTRO(5);
+public enum ENUM_MESSAGE {
+    INSERT_RECORD_CLIENT(1), GET_ALL_RECORD_CLIENT(2), DEL_RECORD_CLIENT(3), MESSAGE(4), RECORD_CLIENT(5);
      
     private final int valor;
-    EnumTipoMensagem(int valorOpcao){
+    ENUM_MESSAGE(int valorOpcao){
         valor = valorOpcao;
     }
     public int getValor(){

@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tarefa_02_sd;
+package applicationLayer.client;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 
 /**
  *
  * @author QueroDelivery
  */
-public interface UDPServerInterface {
-    public void listen() throws IOException;
-    public boolean removerClient(RegistroClient registro);
-    public boolean adicionarClient(RegistroClient registro);
-    
+public interface ClientInterface {
+    void listen() throws IOException;
+    void recordOnServer()throws UnknownHostException, IOException, ClassNotFoundException;
 }

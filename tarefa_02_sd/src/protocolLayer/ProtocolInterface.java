@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tarefa_02_sd;
+package protocolLayer;
 
 import java.io.IOException;
 
@@ -11,11 +11,11 @@ import java.io.IOException;
  *
  * @author QueroDelivery
  */
-public interface MySocketInterface {
+public interface ProtocolInterface {
 
-    public void send(Protocol protocol) throws IOException;
+    public void send(Message msgSend) throws IOException;
     
-    public Protocol receive() throws IOException, ClassNotFoundException;
+    public Message receive() throws IOException, ClassNotFoundException;
 
     
 }
