@@ -15,4 +15,5 @@ import java.net.UnknownHostException;
 public interface ClientInterface {
     void listen() throws IOException;
     void recordOnServer()throws UnknownHostException, IOException, ClassNotFoundException;
+    void removeRecordOnServer() throws UnknownHostException, IOException, ClassNotFoundException;
 }

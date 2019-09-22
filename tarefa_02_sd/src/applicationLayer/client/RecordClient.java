@@ -84,9 +84,13 @@ public class RecordClient implements Serializable {
         this.id = id;
     }
 
+    public static String HeaderToString() {
+        return "Id \t\t Nome \t\t Ip \t\t";
+    }
+
     @Override
     public String toString() {
-        return this.getId() + " " + this.getName() + " " + this.getIp();
+        return this.getId() + "\t\t" + this.getName() + "\t\t" + this.getIp();
     }
 
 }

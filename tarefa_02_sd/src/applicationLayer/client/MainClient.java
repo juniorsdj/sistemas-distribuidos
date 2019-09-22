@@ -20,8 +20,39 @@ public class MainClient {
 
         System.out.println("iniciar o cliente");
         UDPClient client = new UDPClient();
-        
-        
+        int opcao;
+        do {
+            System.out.println("Digite 1 para conversar com outro usuário");
+            System.out.println("Digite 2 para visualizar todos os usuários conectados");
+            System.out.println("Digite 3 esconectar do servidor");
+            System.out.println("Digite -1 sair");
+            opcao = input.nextInt();
+            switch (opcao) {
+                case 1:
+                    System.out.println("Digite o id do usuário que deseja conversar");
+
+                    break;
+
+                case 2:
+                    client.getRecordsConnected();
+
+                    break;
+                case 3:
+
+                    client.removeRecordOnServer();
+                    break;
+
+                case -1:
+                    System.out.println("Até a próxima");
+                    client.removeRecordOnServer();
+                    break;
+
+                default:
+                    System.out.println("Opcao não identificada");
+            }
+
+        } while (opcao != -1);
+
     }
 
 }

@@ -35,15 +35,43 @@ public class UDPClient implements ClientInterface {
         System.out.println("Informe qual é a porta servidor");
         this.serverPort = input.nextInt();
 
-        myRecord = new RecordClient(this.name);
+        this.myRecord = new RecordClient(this.name);
 
         Message msg = new Message();
-        msg.setRecord(myRecord);
+        msg.setRecord(this.myRecord);
         msg.setType(ENUM_MESSAGE.INSERT_RECORD_CLIENT);
         msg.setIpDestinatario(serverAddress);
         msg.setPortDestinatario(serverPort);
 
         this.myProtocol.send(msg);
+        this.getRecordsConnected();
+    }
+
+    @Override
+    public void removeRecordOnServer() throws UnknownHostException, IOException, ClassNotFoundException {
+
+        Message msg = new Message();
+        msg.setRecord(this.myRecord);
+        msg.setType(ENUM_MESSAGE.DEL_RECORD_CLIENT);
+        msg.setIpDestinatario(serverAddress);
+        msg.setPortDestinatario(serverPort);
+
+        this.myProtocol.send(msg);
+    }
+
+    public void sendMessageToClient() {
+    }
+
+    public void getRecordsConnected() throws IOException {
+        Message msg = new Message();
+
+        msg.setType(ENUM_MESSAGE.GET_ALL_RECORD_CLIENT);
+        msg.setIpDestinatario(serverAddress);
+        msg.setPortDestinatario(serverPort);
+
+        this.myProtocol.send(msg);
+
+        System.out.println(RecordClient.HeaderToString());
         this.listen();
     }
 
@@ -67,14 +95,16 @@ public class UDPClient implements ClientInterface {
                     System.out.println("ESSA MENSAGEM DEVE SER ENVIADA APENAS PARA SERVIDOR");
                     break;
 
-                case MESSAGE:
-                    System.out.println("DEL_RECORD_CLIENT");
+                case MESSAGE_TO_CLIENT:
+                    System.out.println("MESSAGE_TO_CLIENT");
                     break;
                 case RECORD_CLIENT:
                     RecordClient novoClient = recebido.getRecord();
                     System.out.println(novoClient.toString());
 
-                    System.out.println(novoClient.toString());
+                    if (recebido.getIsMultiPart()) {
+                        this.listen();
+                    }
                     break;
                 default:
                     System.out.println("Não está obedecendo os tipos do protocolo!");

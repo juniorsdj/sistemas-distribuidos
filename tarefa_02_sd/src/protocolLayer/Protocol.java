@@ -44,14 +44,14 @@ public class Protocol implements ProtocolInterface {
         byte[] Buf;
         Buf = baos.toByteArray();
         DatagramPacket sendPacket = new DatagramPacket(Buf, Buf.length, msgSend.getIpDestinatario(), msgSend.getPortDestinatario());
-        System.out
-                .println("Enviando pacote UDP para " + msgSend.getIpDestinatario() + ":" + msgSend.getPortDestinatario());
+        //System.out
+        //        .println("Enviando pacote UDP para " + msgSend.getIpDestinatario() + ":" + msgSend.getPortDestinatario());
         socket.send(sendPacket);
     }
 
     public Message receive() throws IOException, ClassNotFoundException {
         DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-        System.out.println("Esperando por datagrama UDP na porta " + this.getPortRemetente());
+        //System.out.println("Esperando por datagrama UDP na porta " + this.getPortRemetente());
         socket.receive(receivePacket);
 
         ByteArrayInputStream baos = new ByteArrayInputStream(receiveData);
