@@ -65,9 +65,6 @@ public class Protocol implements ProtocolInterface {
 
     }
 
-    /**
-     * @return the receivePacket
-     */
     public DatagramPacket getReceivePacket() {
         return receivePacket;
     }

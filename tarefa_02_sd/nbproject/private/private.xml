@@ -3,12 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/tarefa_02_sd/Protocol.java</file>
-            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/tarefa_02_sd/UDPServer.java</file>
-            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/tarefa_02_sd/UDPClient.java</file>
-            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/tarefa_02_sd/MySocketInterface.java</file>
-            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/tarefa_02_sd/UDPServerInterface.java</file>
-            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/tarefa_02_sd/MySocket.java</file>
+            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/protocolLayer/Protocol.java</file>
+            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/protocolLayer/Message.java</file>
+            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/applicationLayer/client/UDPClient.java</file>
+            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/applicationLayer/client/RecordClient.java</file>
+            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/applicationLayer/server/UDPServerInterface.java</file>
+            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/applicationLayer/server/MainServer.java</file>
+            <file>file:/Users/QueroDelivery/Documents/IFS/sistemas_distribuidos/tarefa_02_sd/src/applicationLayer/server/UDPServer.java</file>
         </group>
     </open-files>
 </project-private>

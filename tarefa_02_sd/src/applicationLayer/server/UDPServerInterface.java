@@ -8,6 +8,7 @@ package applicationLayer.server;
 import applicationLayer.client.RecordClient;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.SocketException;
 
 /**
  *
@@ -22,5 +23,6 @@ public interface UDPServerInterface {
     boolean addClient(RecordClient record);
 
     void showRecordsClients(InetAddress ip, int port);
-
+    
+    void start (int port) throws SocketException, IOException;
 }
