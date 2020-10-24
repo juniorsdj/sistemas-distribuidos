@@ -34,15 +34,13 @@ const sendMensage = (msgn) => {
     console.log(`you sent: [${message}]`)
     server.send(message, destiny_port, destiny_address, (err) => {
     });
-}   
+}
 
 
 process.openStdin().addListener("data", function (d) {
-    if(d.toString().trim() == 'exit'){
+    if (d.toString().trim() == 'exit') {
         return process.exit()
     }
-    // note:  d is an object, and when converted to a string it will
-    // end with a linefeed.  so we (rather crudely) account for that  
-    // with toString() and then trim() 
+
     sendMensage(d.toString().trim())
 });
